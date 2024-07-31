@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Geolocation</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+	
+    <title>Sleek Admin</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<div id="map" style="width:100%; height: 100vh"></div></div>
+	<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"></script>
+	<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+
+	<script>
+
+		var map = L.map('map').setView([32.3373, -6.3534], 11);
+		mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
+		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Leaflet &copy; ' + mapLink + ', contribution', maxZoom: 18 }).addTo(map);
+
+		var taxiIcon = L.icon({
+			iconUrl: 'img/simolife.png',
+			iconSize: [100, 50]
+		})
+
+		var icon1 = L.icon({
+			iconUrl: 'img/icon1.png',
+			iconSize: [100, 50]
+		});
+		
+		var icon2 = L.icon({
+			iconUrl: 'img/icon2.png',
+			iconSize: [100, 50]
+		});
+		
+		var icon3 = L.icon({
+			iconUrl: 'img/icon3.png',
+			iconSize: [100, 50]
+		});
+		
+		var icon4 = L.icon({
+			iconUrl: 'img/icon4.png',
+			iconSize: [100, 50]
+		});
+		
+
+
+
+		var marker = L.marker([32.3373, -6.3534], { icon: taxiIcon }).addTo(map);
+		var marker1 = L.marker([33.5731, -7.5898], { icon: icon1 }).addTo(map);
+		var marker2 = L.marker([34.0209, -6.8416], { icon: icon2 }).addTo(map);
+		var marker4 = L.marker([35.7595, -5.8330], { icon: icon4 }).addTo(map);
+		
+		
+		map.on('click', function (e) {
+    var newMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+    
+    var waypoints = [
+        L.latLng(32.3373, -6.3534),
+        L.latLng(e.latlng.lat, e.latlng.lng)
+    ];
+    
+    var routingControl = L.Routing.control({
+        waypoints: waypoints
+    }).on('routesfound', function (e) {
+        var routes = e.routes;
+        console.log(routes);
+
+        e.routes[0].coordinates.forEach(function (coord, index) {
+            setTimeout(function () {
+                marker.setLatLng([coord.lat, coord.lng]);
+            }, 100 * index)
+        })
+    }).addTo(map);
+});
+
+
+	</script>
+
+</body>
+</html>

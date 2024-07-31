@@ -1,0 +1,110 @@
+Ajouter, modifier et supprimer des véhicules, des conducteurs,
+des documents de circulation, des enregistrements de vidange, etc.
+Associer un conducteur à un véhicule et vice versa.
+Enregistrer les détails de maintenance pour un véhicule spécifique.
+Suivre les documents de circulation associés à chaque véhicule et gérer leur validité.
+Enregistrer les enregistrements de vidange pour chaque véhicule, y compris la date, le kilométrage et le montant.
+Gérer les informations sur le carburant, y compris le type de carburant et le prix par litre.
+
+
+
+
+Classe Vehicle (véhicule) :
+
+Attributs : id, registrationNumber, model, year, mileage, fuelType, driver, maintenance, documents
+Relations :
+Un véhicule peut avoir un conducteur (Driver).
+Un véhicule peut avoir des informations de maintenance associées (Maintenance).
+Un véhicule peut avoir plusieurs documents de circulation associés (DocumentCirculation).
+Un véhicule peut avoir plusieurs enregistrements de vidange associés (Videnge).
+
+
+Classe Driver (conducteur) :
+
+Attributs : id, name, licenseNumber, contactNumber
+Relations :
+Un conducteur peut être associé à plusieurs véhicules (Vehicle).
+
+
+Classe Fuel (carburant) :
+
+Attributs : id, type, pricePerLiter
+Relations : Aucune relation spécifique dans ce modèle.
+
+
+Classe DocumentCirculation (documents de circulation) :
+
+
+Attributs : id, vehicle, documentType, issueDate, expiryDate
+Relations :
+Un document de circulation est associé à un véhicule (Vehicle).
+
+
+Classe Maintenance (maintenance) :
+
+Attributs : id, vehicle, maintenanceType, startDate, endDate, description
+Relations :
+Une maintenance est associée à un véhicule (Vehicle).
+
+
+Classe Videnge (vidange) :
+
+Attributs : id, vehicle, videngeDate, mileage, amount
+Relations :
+Une vidange est associée à un véhicule (Vehicle).
+Les fonctionnalités détaillées du système pourraient inclure :
+
+-------------------------------------------------------------------------------
+
+--In the end tutorial you will know how to build website using springboot+thymeleaf+admin template using Bootstrap. 
+--Flow the web application which will we build: see the image
+--This tutorial will divide into 6 section
+ 1. Create Springboot project
+  - open spring initializr(https://start.spring.io/
+)
+  - select maven as build tool
+  - spring boot 2.5.5 version
+  - follow the metadata project like mine
+  - packaging jar
+  - java 11
+  - Add dependencies (Spring Web)+Thymeleaf template engines
+  - generate(after generate, you can put your project in the spesific place/folder)
+  - unzip project, Import project into intellijIdea
+  - makesure your pc/laptop connect to internet(wait until finish download dependencies)
+  - add other dependency from thymeleaf (thymeleaf-layout-dialect)
+ 2. Create package & folder for project structure
+  - create package controller
+  - under folder resources - static folder, create folder css, js and images(create manually)
+  - under templates create folder fragments, layouts, page
+   - fragments - use for gather static content like header, sidebar and footer
+         - layouts   - to combine header, sidebar, and footer, so they become templates ready use
+         - pages     - use for gather dynamic page
+    3. Download Admin Template using Bootstrap & Understanding default template structure
+     - I Download template from github(https://github.com/zuramai/voler
+)
+     - after sucess download, unzip file, open folder /voler-main/dist/index.html (open index.xml using chrome/mozila or other browser)
+     - observe header, sidebar menu & footer
+     - click the menu COMPONENT select sub menu BADGE
+     - click menu form ELEMENTS select sub menu RADIO
+     - you can observe, which component not changed every time you select submenu(BADGE/RADIO)
+     - they are header, sidebar, and footer(common used component & static)
+    4. Create a login page for entry point , when URL hit for the first time
+     - open folder /voler-main/dist/auth-login.html
+     - create auth-login.html inside templates folder
+     - copy html code from template
+     - copy css, js and images which needed for login template(css to folder resources/static/css ,js to folder resources/static/js and image to folder resources/static/images)
+     - add xmlns/xml namespaces for thymeleaf
+     - load css, jss and image using thymeleaf tag 
+     - add action when button submit/click
+ 5. Modify admin template into 4 component and add into springboot
+  - create header html file inside folder fragments, and copy header from template, Add thymeleaf namespaces, add fragment tag.
+  - create sidebar html file inside folder fragments, and copy sidebar from template, Add thymeleaf, add fragment tag.
+  - create footer html file inside folder fragments, copy footer from template, Add thymeleaf, add fragment tag.
+  - create dashboard html inside folder layouts(this page used to combine header, sidebar, dynamic content, and footer) , copy template from index, add thymeleaf namespaces, add thymeleaf namespace layout, load js css and image which needed for template, combine header, sidebar and footer using th:replace(structure template sidebar, header, conten, footer), mark div tag which used for dynamic content
+  - create one page. This page used when user success login(landing page, when user succes login will show this page, copy code from template), add xml namespace, add xml namespace layout, add layout decorator which mark this page using dashboard template, replace conten use layout fragment with real conten.
+ 6. Create Controller class
+  - Create a LoginController Class, to handle requests when the app first appears
+  - Create a method to redirect request to login page
+  - Create method to redirect request to admin template when submit button click
+  - Run app
+  try login to dasboard, success
